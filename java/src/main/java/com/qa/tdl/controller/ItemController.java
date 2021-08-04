@@ -37,7 +37,6 @@ public class ItemController {
 	public ResponseEntity<List<Item>> getAllItems() {
 		List<Item> data = this.itemService.getAllItems();
 
-		// return new ResponseEntity<List<User>>(data, HttpStatus.OK);
 
 		if (data != null) {
 			return new ResponseEntity<List<Item>>(data, HttpStatus.OK);
@@ -45,6 +44,30 @@ public class ItemController {
 			return new ResponseEntity<List<Item>>(data, HttpStatus.NOT_FOUND);
 		}
 
+	}
+	
+	@PostMapping
+	public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
+		Item data = this.itemService.createItem(item);
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setLocation(URI.create("localhost:80/item/" + data.getId()));
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		if (!data.equals(null)) {
+			return new ResponseEntity<Item>(data, headers, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<Item>(data, HttpStatus.BAD_REQUEST);
+		}
+
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteItem(@PathVariable("id") int id) {
+		this.itemService.deleteItem(id);
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

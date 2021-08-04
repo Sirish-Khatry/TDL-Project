@@ -26,6 +26,21 @@ public class ItemService {
 		return itemsinDb;
 
 	}
+	
+	public Item createItem(Item item) {
+
+		Item savedItem = this.itemRepository.save(item);
+		return savedItem;
+
+	}
+	
+	public void deleteItem(int id) {
+
+		if (!itemRepository.existsById(id))
+			throw new EntityNotFoundException();
+		itemRepository.deleteById(id);
+	}
+
 
 
 }

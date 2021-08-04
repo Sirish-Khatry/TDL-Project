@@ -88,6 +88,8 @@
     .catch((error) => {
       console.error('Error:', error);
     });
+
+    window.location.reload();
     
     document.getElementById("createForm").style.display = "none";
   }, false);
@@ -109,9 +111,21 @@
   }, false);
 
   submitDeleteBtn.addEventListener("click", (event) => {
-    const data = {id: itemIDdel.value};
 
-    console.log(data); 
+    console.log(itemIDdel.value); 
+
+    fetch('http://127.0.0.1:80/item/' + itemIDdel.value, {
+      method: 'DELETE', // or 'PUT'
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+    window.location.reload();
 
     document.getElementById("deleteForm").style.display = "none";
   }, false);
