@@ -1,6 +1,7 @@
 package com.qa.tdl.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -24,6 +25,21 @@ public class ItemService {
 
 		List<Item> itemsinDb = itemRepository.findAll();
 		return itemsinDb;
+
+	}
+	
+	public Item updateItem(int id, Item item) {
+
+		if (!itemRepository.existsById(id)) {
+		throw new EntityNotFoundException(); }
+		Item itemInDb = itemRepository.findById(id).get();
+		System.out.println(itemInDb.getTask());
+		System.out.println(item.getTask());
+		itemInDb.setTask(item.getTask());
+		itemInDb.setStatus(item.getStatus());	
+		this.itemRepository.save(itemInDb);
+		
+		return itemInDb;
 
 	}
 	

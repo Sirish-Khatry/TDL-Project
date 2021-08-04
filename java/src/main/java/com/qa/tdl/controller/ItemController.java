@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.qa.tdl.entity.Item;
 import com.qa.tdl.service.ItemService;
 
@@ -33,7 +32,7 @@ public class ItemController {
 		this.itemService = itemService;
 	}
 
-	@GetMapping
+	@GetMapping("/getAll")
 	public ResponseEntity<List<Item>> getAllItems() {
 		List<Item> data = this.itemService.getAllItems();
 
@@ -46,7 +45,7 @@ public class ItemController {
 
 	}
 	
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
 		Item data = this.itemService.createItem(item);
 
@@ -63,7 +62,20 @@ public class ItemController {
 
 	}
 	
-	@DeleteMapping("/{id}")
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Item> updateItem(@Valid @PathVariable("id") int id, @RequestBody Item item) {
+		Item data = this.itemService.updateItem(id, item);
+		
+	//	if (data != null) {
+			return new ResponseEntity<Item>(data, HttpStatus.ACCEPTED);
+//		} else {
+//			return new ResponseEntity<Item>(data, HttpStatus.NOT_FOUND);
+//		}
+		
+
+	}
+	
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteItem(@PathVariable("id") int id) {
 		this.itemService.deleteItem(id);
 

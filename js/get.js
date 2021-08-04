@@ -41,7 +41,7 @@
     return div;
   }
     function simpleFetch(){
-      const a = ["http://127.0.0.1:80/item"];
+      const a = ["http://127.0.0.1:80/item/getAll"];
           fetch(a)
           .then((response => {
             if(response.status !== 200){
@@ -64,6 +64,8 @@
   const header = ["ID", "TASK", "STATUS"];
   simpleFetch();
 
+  //CREATE
+
   openCreateBtn.addEventListener("click", (event) => {
     document.getElementById("createForm").style.display = "block";
   }, false);
@@ -74,7 +76,7 @@
 
     console.log(data);
 
-    fetch('http://127.0.0.1:80/item', {
+    fetch('http://127.0.0.1:80/item/create', {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -88,23 +90,40 @@
     .catch((error) => {
       console.error('Error:', error);
     });
-
-    window.location.reload();
     
     document.getElementById("createForm").style.display = "none";
+    window.location.reload();
   }, false);
+
+  //UPDATE
 
   openUpdateBtn.addEventListener("click", (event) => {
     document.getElementById("updateForm").style.display = "block";
   }, false);
 
   submitUpdateBtn.addEventListener("click", (event) => {
-    const data = {id: itemID.value, task: task_update.value, status: status_update.value};
-
+    const data = {"id": itemID.value, "task": task_update.value, "status": status_update.value};
     console.log(data);
+    fetch('http://127.0.0.1:80/item/update/' + itemID.value, {
+      method: 'PUT', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+    },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
     document.getElementById("updateForm").style.display = "none";
+    // window.location.reload();
   }, false);
+
+  //DELETE
 
   openDeleteBtn.addEventListener("click", (event) => {
     document.getElementById("deleteForm").style.display = "block";
@@ -114,7 +133,7 @@
 
     console.log(itemIDdel.value); 
 
-    fetch('http://127.0.0.1:80/item/' + itemIDdel.value, {
+    fetch('http://127.0.0.1:80/item/delete/' + itemIDdel.value, {
       method: 'DELETE', // or 'PUT'
     })
     .then(response => response.json())
@@ -125,9 +144,8 @@
       console.error('Error:', error);
     });
 
-    window.location.reload();
-
     document.getElementById("deleteForm").style.display = "none";
+    window.location.reload();
   }, false);
 
 })();
