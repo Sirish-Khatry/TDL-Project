@@ -36,6 +36,8 @@
   }
 
   #flex{
+    margin: auto;
+    display:flex;
     flex-wrap: wrap;
     width: 90%;
     height: 600px;

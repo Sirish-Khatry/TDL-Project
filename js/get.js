@@ -31,14 +31,12 @@
       head3.innerText = header[2];
       var para3 = document.createElement("p");
       para3.innerText = result[2];
-
       div.appendChild(head);
       div.appendChild(para);
       div.appendChild(head2);
       div.appendChild(para2);
       div.appendChild(head3);
       div.appendChild(para3);
-
 
     return div;
   }
@@ -76,6 +74,21 @@
 
     console.log(data);
 
+    fetch('http://127.0.0.1:80/item', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+    },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+    
     document.getElementById("createForm").style.display = "none";
   }, false);
 
