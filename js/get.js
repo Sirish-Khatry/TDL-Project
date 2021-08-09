@@ -2,6 +2,7 @@
 
 
     let container = document.querySelector("#flex");
+    let promptContainer = document.querySelector("#prompt");
     let openCreateBtn = document.querySelector("#createBtn");
     let openUpdateBtn = document.querySelector("#updateBtn");
     let openDeleteBtn = document.querySelector("#deleteBtn");
@@ -92,7 +93,11 @@
     });
     
     document.getElementById("createForm").style.display = "none";
-    window.location.reload();
+    var prompt = document.createElement("p");
+    var prompttext = document.createTextNode("Created");
+    prompt.appendChild(prompttext);
+    promptContainer.appendChild(prompt);
+    // window.location.reload();
   }, false);
 
   //UPDATE
@@ -120,6 +125,11 @@
     });
 
     document.getElementById("updateForm").style.display = "none";
+
+    var prompt = document.createElement("p");
+    var prompttext = document.createTextNode("Updated");
+    prompt.appendChild(prompttext);
+    promptContainer.appendChild(prompt);
     // window.location.reload();
   }, false);
 
@@ -144,8 +154,14 @@
       console.error('Error:', error);
     });
 
+    var prompt = document.createElement("p");
+    var prompttext = document.createTextNode("Deleted");
+    prompt.appendChild(prompttext);
+    promptContainer.appendChild(prompt);
+
     document.getElementById("deleteForm").style.display = "none";
-    window.location.reload();
+    // window.location.reload();
+
   }, false);
 
 })();

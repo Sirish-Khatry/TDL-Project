@@ -130,6 +130,19 @@ footer h4{
   width: 280px;
 }
 
+.prompt {
+  background-color: rgb(255, 246, 246);
+  color: rgb(3, 3, 3);
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 50px;
+  right: 1200px;
+  width: 280px;
+}
+
 .form-popup {
   display: none;
   position: fixed;
