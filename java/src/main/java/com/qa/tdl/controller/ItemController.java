@@ -36,7 +36,6 @@ public class ItemController {
 	public ResponseEntity<List<Item>> getAllItems() {
 		List<Item> data = this.itemService.getAllItems();
 
-
 		if (data != null) {
 			return new ResponseEntity<List<Item>>(data, HttpStatus.OK);
 		} else {
@@ -44,36 +43,36 @@ public class ItemController {
 		}
 
 	}
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
 		Item data = this.itemService.createItem(item);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(URI.create("localhost:80/item/" + data.getId()));
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
 		if (data != null) {
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(URI.create("localhost:80/item/" + data.getId()));
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
 			return new ResponseEntity<Item>(data, headers, HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<Item>(data, HttpStatus.BAD_REQUEST);
 		}
 
 	}
-	
+
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Item> updateItem(@Valid @PathVariable("id") int id, @RequestBody Item item) {
 		Item data = this.itemService.updateItem(id, item);
-		
+
 		if (data != null) {
 			return new ResponseEntity<Item>(data, HttpStatus.ACCEPTED);
 		} else {
 			return new ResponseEntity<Item>(data, HttpStatus.NOT_FOUND);
 		}
-		
 
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteItem(@PathVariable("id") int id) {
 		this.itemService.deleteItem(id);

@@ -23,93 +23,86 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.tdl.entity.Item;
 
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@Sql(scripts = {"classpath:todo-schema.sql", 
-		"classpath:todo-data.sql"},
-executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = { "classpath:todo-schema.sql",
+		"classpath:todo-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @ActiveProfiles("test")
 public class ItemControllerTest {
-	
+
 	@Autowired
-	private MockMvc mock; 
-	
+	private MockMvc mock;
+
 	@Autowired
 	private ObjectMapper mapper;
-	
+
 	@Test
 	public void testCreate() throws Exception {
-		
+
 		Item item = new Item("Test-1", "Completed");
-		
+
 		String itemAsJSON = this.mapper.writeValueAsString(item);
-		
-		RequestBuilder mockRequest =  	post("/item/create")
-										.contentType(MediaType.APPLICATION_JSON)
-										.content(itemAsJSON);
-		
+
+		RequestBuilder mockRequest = post("/item/create").contentType(MediaType.APPLICATION_JSON).content(itemAsJSON);
+
 		Item savedItem = new Item(2, "Test-1", "Completed");
-		
+
 		String savedItemAsJSON = this.mapper.writeValueAsString(savedItem);
-		
-		ResultMatcher matchStatus = status().isCreated(); 
-		
+
+		ResultMatcher matchStatus = status().isCreated();
+
 		ResultMatcher matchBody = content().json(savedItemAsJSON);
 		System.out.println(itemAsJSON);
 		System.out.println(savedItemAsJSON);
 		this.mock.perform(mockRequest).andExpect(matchBody).andExpect(matchStatus);
-		
+
 	}
+
 	@Test
 	public void testGetAll() throws Exception {
-		
-		RequestBuilder mockRequest =  	get("/item/getAll")
-										.contentType(MediaType.APPLICATION_JSON);
-				
-	
+
+		RequestBuilder mockRequest = get("/item/getAll").contentType(MediaType.APPLICATION_JSON);
+
 		Item savedItem = new Item(1, "Test-1", "Completed");
 		List<Item> items = new ArrayList<>();
 		items.add(savedItem);
-		
+
 		String savedItemAsJSON = this.mapper.writeValueAsString(items);
-		
-		ResultMatcher matchStatus = status().isOk(); 
-		ResultMatcher matchBody = content().json(savedItemAsJSON); 
+
+		ResultMatcher matchStatus = status().isOk();
+		ResultMatcher matchBody = content().json(savedItemAsJSON);
 
 		this.mock.perform(mockRequest).andExpect(matchBody).andExpect(matchStatus);
-		
+
 	}
-	
+
 	@Test
 	public void testUpdate() throws Exception {
-		
+
 		Item item = new Item("Updated-Test", "Completed");
-		
+
 		String itemAsJSON = this.mapper.writeValueAsString(item);
-		
-		RequestBuilder mockRequest =  	put("/item/update/1")
-										.contentType(MediaType.APPLICATION_JSON)
-										.content(itemAsJSON);
-		
+
+		RequestBuilder mockRequest = put("/item/update/1").contentType(MediaType.APPLICATION_JSON).content(itemAsJSON);
+
 		Item savedItem = new Item(1, "Updated-Test", "Completed");
-		
+
 		String savedItemAsJSON = this.mapper.writeValueAsString(savedItem);
-		
-		ResultMatcher matchStatus = status().isAccepted(); 
-		ResultMatcher matchBody = content().json(savedItemAsJSON); 
+
+		ResultMatcher matchStatus = status().isAccepted();
+		ResultMatcher matchBody = content().json(savedItemAsJSON);
 		this.mock.perform(mockRequest).andExpect(matchBody).andExpect(matchStatus);
-		
+
 	}
-	
+
 	@Test
 	public void testDelete() throws Exception {
-		
-		RequestBuilder mockRequest =  delete("/item/delete/1");
-			
-		ResultMatcher matchStatus = status().isOk(); 
+
+		RequestBuilder mockRequest = delete("/item/delete/1");
+
+		ResultMatcher matchStatus = status().isOk();
 		this.mock.perform(mockRequest).andExpect(matchStatus);
-		
+
 	}
 
 }

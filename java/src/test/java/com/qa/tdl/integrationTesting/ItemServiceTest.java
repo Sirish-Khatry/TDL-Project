@@ -1,6 +1,5 @@
 package com.qa.tdl.integrationTesting;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
@@ -16,49 +15,46 @@ import com.qa.tdl.service.ItemService;
 
 @SpringBootTest
 public class ItemServiceTest {
-	
+
 	@MockBean
 	private ItemRepository repo;
-	
+
 	@MockBean
 	private Item item;
-	
+
 	@Autowired
 	private ItemService service;
 
-	
 	@Test
 	void testCreate() {
-		//Given
+		// Given
 		Item task = new Item("Task-1", "Completed");
 		Item taskWithId = new Item(1, "Task-1", "Completed");
-		
-		//When
+
+		// When
 		Mockito.when(this.repo.saveAndFlush(task)).thenReturn(taskWithId);
-		
-		
-		//Then
+
+		// Then
 		assertThat(this.service.createItem(task)).isEqualTo(taskWithId);
 		Mockito.verify(this.repo, Mockito.times(1)).saveAndFlush(task);
-		
+
 	}
-	
+
 	@Test
 	void testReadAll() {
-		//Given
+		// Given
 		List<Item> expected = new ArrayList<>();
 		expected.add(new Item(1, "Task-2", "Completed"));
-		
-		//When
+
+		// When
 		Mockito.when(this.repo.findAll()).thenReturn(expected);
-		
-		
-		//Then
+
+		// Then
 		assertEquals(this.service.getAllItems(), expected);
 		Mockito.verify(this.repo, Mockito.times(1)).findAll();
-		
+
 	}
-	
+
 	@Test
 	void testUpdate() {
 //		//Given
@@ -80,10 +76,9 @@ public class ItemServiceTest {
 //		//Verify
 //		Mockito.verify(this.repo, Mockito.times(1)).saveAndFlush(item);
 //		Mockito.verify(this.repo, Mockito.times(1)).saveAndFlush(updated);
-		
-		
+
 	}
-	
+
 	@Test
 	void testDelete() {
 //		Item item = new Item("Task-20", "Completed");
