@@ -11,12 +11,53 @@
   <header>
     <div class="nav">
         <a class="active" href="index.html">Home</a>
+
       </div>
     </header>
 
-<h1 style="padding-top: 20px">To-Do-List</h1>
-  <div id="flex"> </div>
-  <script src="js/get.js"></script>
+<button class="choiceCBtn" id="createBtn">Create</button>
+<button class="choiceUBtn" id="updateBtn">Update</button>
+<button class="choiceDBtn" id="deleteBtn">Delete</button>
+<div class="prompt" id="prompt"></div>
+
+<h1 class="topHeader" style="padding-top: 20px">To-Do-List</h1>
+
+<div class="form-popup" id="createForm">                                      <!--  CREATE FORM  -->
+  <form action="" class="form-container">
+    <h1>Create</h1>
+    <label for="task"><b>Task</b></label>
+    <textarea type="text" rows="20" cols="40" placeholder="Enter-Task" name="task" id="task" ></textarea>
+    <input type="hidden" id="status" name="status" value="To-Do"><br><br>
+    <button type="button" class="btn" id="createSubmit">Create</button>
+  </form>
+</div>                                  <!--  CREATE FORM  -->
+
+<div class="form-popup-update" id="updateForm">                                      <!--  UPDATE FORM  -->
+  <form action="" class="form-container">
+    <h1>Update</h1>
+    <label for="id">ID:</label><br>
+    <input type="number" id="itemID" name="id"><br><br>
+    <label for="task"><b>Task</b></label>
+    <textarea type="text" rows="20" cols="40" placeholder="Enter-Task" name="task" id="task-update" ></textarea>
+    <label for="status"><b>Status</b></label>
+    <input type="text" id="status-update" name="status"><br><br>
+    <button type="button" class="btn" id="updateSubmit">Update</button>
+  </form>
+</div>                                  <!--  UPDATE FORM  -->
+
+
+<div class="form-popup-delete" id="deleteForm">                                      <!--  DELETE FORM  -->
+  <form action="" class="form-container">
+    <h1>Delete</h1>
+    <label for="id">ID:</label><br>
+    <input type="number" id="itemIDdel" name="id"><br><br>
+    <button type="button" class="btn" id="deleteSubmit">Delete</button>
+  </form>
+</div>                                  <!--  DELETE FORM  -->
+
+<div id="flex"> </div>
+<script src="js/get.js"></script>
+
   <footer>
     <div id="copyright">&copy Sirish Khatry 2021</div>
   </footer>
