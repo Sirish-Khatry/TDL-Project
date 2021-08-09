@@ -50,11 +50,10 @@ public class ItemController {
 		Item data = this.itemService.createItem(item);
 
 		HttpHeaders headers = new HttpHeaders();
-
 		headers.setLocation(URI.create("localhost:80/item/" + data.getId()));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		if (!data.equals(null)) {
+		if (data != null) {
 			return new ResponseEntity<Item>(data, headers, HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<Item>(data, HttpStatus.BAD_REQUEST);
@@ -66,11 +65,11 @@ public class ItemController {
 	public ResponseEntity<Item> updateItem(@Valid @PathVariable("id") int id, @RequestBody Item item) {
 		Item data = this.itemService.updateItem(id, item);
 		
-	//	if (data != null) {
+		if (data != null) {
 			return new ResponseEntity<Item>(data, HttpStatus.ACCEPTED);
-//		} else {
-//			return new ResponseEntity<Item>(data, HttpStatus.NOT_FOUND);
-//		}
+		} else {
+			return new ResponseEntity<Item>(data, HttpStatus.NOT_FOUND);
+		}
 		
 
 	}

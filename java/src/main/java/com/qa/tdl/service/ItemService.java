@@ -33,8 +33,8 @@ public class ItemService {
 		if (!itemRepository.existsById(id)) {
 		throw new EntityNotFoundException(); }
 		Item itemInDb = itemRepository.findById(id).get();
-		System.out.println(itemInDb.getTask());
-		System.out.println(item.getTask());
+//		System.out.println(itemInDb.getTask());
+//		System.out.println(item.getTask());
 		itemInDb.setTask(item.getTask());
 		itemInDb.setStatus(item.getStatus());	
 		this.itemRepository.save(itemInDb);
@@ -45,16 +45,17 @@ public class ItemService {
 	
 	public Item createItem(Item item) {
 
-		Item savedItem = this.itemRepository.save(item);
+		Item savedItem = this.itemRepository.saveAndFlush(item);
 		return savedItem;
 
 	}
 	
-	public void deleteItem(int id) {
+	public int deleteItem(int id) {
 
 		if (!itemRepository.existsById(id))
 			throw new EntityNotFoundException();
 		itemRepository.deleteById(id);
+		return id;
 	}
 
 

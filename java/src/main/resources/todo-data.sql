@@ -1,0 +1,1 @@
+insert into item (id, status, task) values (1, 'Completed', 'Test-1');

@@ -1,5 +1,7 @@
 package com.qa.tdl.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +33,12 @@ public class Item {
 		this.status = status;
 	}
 
+	public Item(String task, String status) {
+		super();
+		this.task = task;
+		this.status = status;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -54,5 +62,23 @@ public class Item {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, status, task);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		return id == other.id && Objects.equals(status, other.status) && Objects.equals(task, other.task);
+	}
+
 
 }
